@@ -1,3 +1,4 @@
+/// El envio de mensajes con el metodo send() no es bloqueante, el mensaje se envia y el hilo puede continuar con su ejecucion inmediatamente
 use core::time::Duration;
 use std::sync::mpsc;
 use std::thread;
