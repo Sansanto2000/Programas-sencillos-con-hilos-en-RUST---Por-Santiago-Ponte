@@ -1,3 +1,4 @@
+/// Los subprecesos no siempre tienen que actuar como emisores de los mensajes, tambien pueden ser emisores de los mismos
 use std::sync::mpsc;
 use std::thread;
 
