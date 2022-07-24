@@ -1,7 +1,6 @@
-// Estos test daran error si solo se los copia tal cual, ya que en este archivos no estan definidos varios metodos que los mismos utilizan.
-// En caso de sus interfaces sean definidas mediante alguna implementacion, entonces no daran error, pero si las implementaciones no son 
-// adecuadas entonces fallaran, solo pasaran si las implementaciones estan definidas de forma correcta, si es de interes puede encontrar 
-// estos mismos tests, con los metodos correctamente implementados en 'Codigos/3./main.rs'
+// Estos tests compilaran, pero fallaran, ya que en este punto del desarrollo faltaba definir correctamente un par de metodos importantes.
+// Si es de interes puede encontrar estos mismos tests, con los metodos correctamente implementados en 'Codigos/3./main.rs'
+
 use rand::Rng; // Agregar 'rand = "0.8.3"' en cargo.toml
 
 fn main() {
