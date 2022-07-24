@@ -2,6 +2,37 @@
 // En caso de sus interfaces sean definidas mediante alguna implementacion, entonces no daran error, pero si las implementaciones no son 
 // adecuadas entonces fallaran, solo pasaran si las implementaciones estan definidas de forma correcta, si es de interes puede encontrar 
 // estos mismos tests, con los metodos correctamente implementados en 'Codigos/3./main.rs'
+use rand::Rng; // Agregar 'rand = "0.8.3"' en cargo.toml
+
+fn main() {
+    println!("Hello world");
+}
+
+pub fn transpose_matrix(n: usize, m: usize, a: &[f64]) -> (usize, usize, Vec<f64>) {
+    let mut b:Vec<f64> = vec![0.0; n*m];
+    for i in 0..n {
+        for j in 0..m {
+            b[i*m+j] = a[j*m+i];
+        }
+    }
+    (m, n, b)
+} 
+
+pub fn round_two_decimals(a: &[f64]) -> Vec<f64> {
+    let mut b:Vec<f64> = Vec::new();
+    for i in a.iter() {
+        b.push((*i* 100.0).round() / 100.0);
+    }
+    b
+}
+
+pub fn mul_matrix(n: usize, m: usize, a: &[f64], b: &[f64]) -> Vec<f64> {
+    vec![0.0]
+}
+ 
+pub fn concurrent_mul_matrix(threads:usize ,n: usize, m: usize, a: Vec<f64>, b: Vec<f64>) -> Vec<f64> {
+    vec![0.0]
+}
 
 #[cfg(test)]
 mod tests {
