@@ -47,3 +47,9 @@ pub fn concurrent_mul_matrix(threads:usize ,n: usize, m: usize, a: Vec<f64>, b: 
     let c:Vec<f64> = c_lock.into_inner().unwrap();
     c
 }
+
+fn copy_aux(a: &mut [f64], a_aux: &[f64]) {
+    for i in 0..a_aux.len() {
+        a[i] = a_aux[i];
+    }
+}
