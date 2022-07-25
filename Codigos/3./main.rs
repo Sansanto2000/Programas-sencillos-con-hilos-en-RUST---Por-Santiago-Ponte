@@ -5,9 +5,9 @@ use std::sync::Arc;
 use std::time::Instant;
 
 fn main() {
-    let n = 1024;
-    let m = 1024;
-    let threads = 2;
+    let n = 2048;
+    let m = n;
+    let threads = vec![1,2,4];
     let iterator = (0..(n*m)).map(|_| {
         let mut rng = rand::thread_rng();
         let number:f64 = rng.gen(); // generates a float between 0 and 100
@@ -19,16 +19,31 @@ fn main() {
 
     let now = Instant::now();
     let c = mul_matrix(n, m, &a, &b);
-    let secuencial_time = now.elapsed();
+    let secuencial_time = now.elapsed().as_secs_f32();
 
-    let now = Instant::now();
-    let d = concurrent_mul_matrix(threads, n, m, a, b);
-    let concurrent_time = now.elapsed();
+    let mut concurrent_times = Vec::new();
+    for &t in threads.iter() {
+        let a = a.clone();
+        let b = b.clone();
 
-    assert_eq!(c, d);
-    
-    println!("Algoritmo secuencial tarda {} segundos", secuencial_time.as_secs_f32());
-    println!("Algoritmo concurrente tarda {} segundos", concurrent_time.as_secs_f32());
+        let now = Instant::now();
+        let d = concurrent_mul_matrix(t, n, m, a, b);
+        let duration = now.elapsed().as_secs_f32();
+        concurrent_times.push(duration);
+
+        assert_eq!(c, d);
+    }
+
+    println!("---------- Secuencial ----------");
+    println!("Tiempo secuencial:    {} segundos", secuencial_time);
+    for i in 0..threads.len() {
+        let speedup = secuencial_time / concurrent_times[i];
+        let efficiency = speedup / threads[i] as f32;
+        println!("---------- Hilos = {} ----------", threads[i]);
+        println!("Tiempo concurrente:   {} segundos", concurrent_times[i]);
+        println!("Speedup:              {}", speedup);
+        println!("Eficiencia:           {}", efficiency);
+    }
 }
 
 pub fn transpose_matrix(n: usize, m: usize, a: &[f64]) -> (usize, usize, Vec<f64>) {
@@ -82,7 +97,8 @@ pub fn concurrent_mul_matrix(threads:usize ,n: usize, m: usize, a: Vec<f64>, b: 
     for handle in handles {
         handle.join().unwrap();
     }
-    let c:Vec<f64> = Arc::clone(&c_lock_arc).lock().unwrap().clone();
+    let c_lock = Arc::try_unwrap(c_lock_arc).unwrap();
+    let c:Vec<f64> = c_lock.into_inner().unwrap();
     c
 }
 
