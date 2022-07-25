@@ -28,6 +28,7 @@ pub fn concurrent_mul_matrix(threads:usize ,n: usize, m: usize, a: Vec<f64>, b: 
     for handle in handles {
         handle.join().unwrap();
     }
-    let c:Vec<f64> = Arc::clone(&c_lock_arc).lock().unwrap().clone();
+    let c_lock = Arc::try_unwrap(c_lock_arc).unwrap();
+    let c:Vec<f64> = c_lock.into_inner().unwrap();
     c
 }
