@@ -1,3 +1,6 @@
+// Estos tests compilaran, pero fallaran, ya que en este punto del desarrollo faltaba definir correctamente un par de metodos importantes.
+// Si es de interes puede encontrar estos mismos tests, con los metodos correctamente implementados en 'Codigos/4./main.rs'
+
 pub fn min_max(vector: &[isize]) -> (isize, isize) {
     (0, 0)
 }
